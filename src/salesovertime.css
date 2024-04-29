@@ -1,0 +1,49 @@
+*{
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+.sales-over-time-svg {
+    font-family: 'Roboto', sans-serif;
+    background-color: rgba(0,0,0,0.95); /* White background for the chart */
+    border: 1px solid #ccc; /* Light grey border */
+    width: 100%; /* SVG takes full width of its container */
+    box-sizing: border-box; /* Ensures padding doesn't affect the overall dimensions */
+    color: whitesmoke; /* Whitesmoke text for legibility */
+  padding-top: 10px;
+  }
+  
+  .axis text {
+    fill: whitesmoke; /* Black color text for the axes */
+    font-size: 14px; /* Larger font size for axes labels */
+  }
+  
+  .axis path,
+  .axis line {
+    stroke: whitesmokeblack; /* Black color lines for axes */
+  }
+
+  
+  
+  .chart-title {
+    fill: whitesmoke; /* Black color for the title */
+    font-size: 24px; /* Increased font size for the title */
+    font-weight: bold; /* Bold font for emphasis */
+    text-decoration: none; /* Remove underline */
+  }
+  
+  
+  .line-path {
+    stroke: orange; /* Orange line for the graph */
+    stroke-width: 2.5; /* Slightly thicker line for better visibility */
+  }
+  .tooltip {
+    background-color: orange;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 5px;
+    position: absolute;
+    visibility: hidden; /* Hidden by default */
+    pointer-events: none; /* Let mouse events pass through */
+    z-index: 10;
+  }
+  

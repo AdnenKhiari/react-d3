@@ -1,0 +1,25 @@
+.pie-chart-svg {
+    width: 100%;
+    height: auto;
+    background-color: rgba(0,0,0,0.95); /* Dark background for the chart */
+    font-family: 'Roboto', sans-serif; /* Consistent font for the application */
+}
+
+.tooltip {
+    background-color: orange; /* Vibrant orange for high visibility */
+    color: black; /* Black text for contrast */
+    padding: 6px 12px;
+    border-radius: 3px;
+    position: absolute;
+    visibility: hidden; /* Hidden by default, shown on hover */
+    pointer-events: none; /* Let mouse events pass through */
+    z-index: 10;
+    font-size: 14px; /* Slightly larger font for readability */
+}
+
+.chart-title {
+    fill: whitesmoke; /* Whitesmoke color for visibility */
+    font-size: 20px; /* Prominent size for the title */
+    text-anchor: middle; /* Center the title */
+    font-weight: bold; /* Bold to stand out */
+}

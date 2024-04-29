@@ -1,38 +1,77 @@
-.App {
-  text-align: center;
+.app-container {
+  font-family: 'Roboto', sans-serif;
+  color: black;
+  /* background-color: rgba(0,0,0,1); */
+  padding: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.filter label {
+  margin-right: 10px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.filter select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.slider-container {
+  margin-top: 20px;
+}
+
+.date-range {
+  color: black;
+  margin-top: 10px;
+}
+
+.slider-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 20px;
+  width: 80%; /* Adjust the width as needed */
+  padding: 10px;
 }
 
-.App-link {
-  color: #61dafb;
+.slider-container .date-range {
+  color: #333; /* Dark grey for readability */
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Range {
+  width: 100%;
+  padding: 10px 0;
+}
+
+.RangeTrack {
+  height: 6px;
+  width: 100%;
+  background-color: #cccccc; /* Light grey track */
+  border-radius: 3px;
+  position: relative;
+}
+
+.RangeThumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background-color: #FFA500; /* Soft orange for the thumb */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3); /* Subtle shadow for depth */
+  cursor: pointer;
+  position: absolute; /* Positioning adjusted to be centered on the track */
+  top: -7px; /* Adjust top position to center the thumb on the track */
 }
