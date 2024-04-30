@@ -9,7 +9,7 @@ function SalesByRegion({ data, selectedRegion, setSelectedRegion }) {
     useEffect(() => {
         const svg = d3.select(ref.current);
         const tooltip = d3.select(tooltipRef.current);
-        svg.selectAll("*").remove(); // Clear previous SVG content
+        svg.selectAll("*").remove(); 
 
         const margin = { top: 60, right: 20, bottom: 30, left: 150 };
         const width = 800 - margin.left - margin.right;
@@ -55,7 +55,7 @@ function SalesByRegion({ data, selectedRegion, setSelectedRegion }) {
         g.append("g").call(yAxis);
         g.append("g").call(xAxis);
 
-    }, [data, selectedRegion, setSelectedRegion]); // Include setSelectedRegion in the dependency array
+    }, [data, selectedRegion, setSelectedRegion]); 
 
     return (
         <div>

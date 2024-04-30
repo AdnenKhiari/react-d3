@@ -10,7 +10,7 @@ function SalesOverTime({ data }) {
     const svg = d3.select(ref.current);
     const tooltip = d3.select(tooltipRef.current);
     const containerWidth = ref.current.clientWidth;
-    svg.selectAll("*").remove(); // Clear previous SVG content
+    svg.selectAll("*").remove(); 
 
     const margin = { top: 50, right: 30, bottom: 50, left: 80 };
     const width = containerWidth - margin.left - margin.right;

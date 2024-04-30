@@ -9,7 +9,7 @@ function ProfitabilityAnalysis({ data, selectedCategory, setSelectedCategory }) 
     if (!data) return;
 
     const svg = d3.select(ref.current);
-    svg.selectAll("*").remove(); // Clear previous SVG content
+    svg.selectAll("*").remove(); 
 
     const width = 800;
     const height = 400;
@@ -20,7 +20,6 @@ function ProfitabilityAnalysis({ data, selectedCategory, setSelectedCategory }) 
       filteredData = data.filter(d => d.Category === selectedCategory);
     }
 
-    // Group data by category and calculate total sales
     const groupByCategory = d3.group(filteredData, d => d.Category);
     const nestedDataArray = Array.from(groupByCategory, ([category, values]) => ({
       Category: category,
@@ -35,15 +34,16 @@ function ProfitabilityAnalysis({ data, selectedCategory, setSelectedCategory }) 
       .sort(null);
 
     const arc = d3.arc()
-      .innerRadius(0)
+      .innerRadius(radius * 0.5)
       .outerRadius(radius);
 
     const arcLabel = d3.arc().innerRadius(radius * 0.8).outerRadius(radius * 0.8);
 
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
+    const color = d3.scaleOrdinal(["#ff8c00", "#ffa500", "#ff7f50", "#ff6347", "#ff4500"]); // Different shades of orange
 
     svg.attr("width", width)
        .attr("height", height)
+       .style("background-color", "black")  
        .append("g")
        .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
@@ -52,7 +52,9 @@ function ProfitabilityAnalysis({ data, selectedCategory, setSelectedCategory }) 
       .enter().append("path")
         .attr("fill", (d, i) => color(i))
         .attr("d", arc)
-        .append("title")  // tooltip
+        .attr("stroke", "white")  
+        .attr("stroke-width", 2)
+        .append("title")  
         .text(d => `${d.data.Category}: $${d.data.TotalSales.toLocaleString()}`);
 
     svg.select("g").selectAll("path")
@@ -64,7 +66,6 @@ function ProfitabilityAnalysis({ data, selectedCategory, setSelectedCategory }) 
         }
       });
 
-    // Add text labels to slices
     svg.select("g").selectAll("text")
       .data(pie(selectedCategory ? Array.from(nestedDataArray.find(d => d.Category === selectedCategory).SubCategories, ([subCategory, values]) => ({ Category: subCategory, TotalSales: d3.sum(values, d => d.Sales) })) : nestedDataArray))
       .enter().append("text")
@@ -72,14 +73,14 @@ function ProfitabilityAnalysis({ data, selectedCategory, setSelectedCategory }) 
         .attr("dy", "0.35em")
         .attr("text-anchor", "middle")
         .text(d => d.data.Category)
-        .style("fill", "#ffffff")
-        .style("font-size", 12);
+        .style("fill", "whitesmoke")
+        .style("font-size", "12px");
 
-    // Adding a central label to show current state
     svg.select("g").append("text")
       .attr("text-anchor", "middle")
       .attr("y", 10)
       .style("font-size", "16px")
+      .style("fill", "whitesmoke")
       .text(selectedCategory ? `Sub-Categories in ${selectedCategory}` : "Sales by Category");
 
   }, [data, selectedCategory, setSelectedCategory]);

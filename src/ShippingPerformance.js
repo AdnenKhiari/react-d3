@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import * as d3 from 'd3';
+import './ShippingPerformance.css'; 
 
 function ShippingPerformance({ data }) {
   const ref = useRef();
@@ -8,18 +9,16 @@ function ShippingPerformance({ data }) {
     if (!data.length) return;
 
     const svg = d3.select(ref.current);
-    svg.selectAll("*").remove(); // Clear previous SVG content
+    svg.selectAll("*").remove(); 
 
-    const margin = { top: 20, right: 120, bottom: 70, left: 40 }; // Adjust right margin to make space for legend
+    const margin = { top: 40, right: 120, bottom: 70, left: 40 };
     const width = 800 - margin.left - margin.right;
     const height = 400 - margin.top - margin.bottom;
 
-    // Calculate 'Days Late'
     data.forEach(d => {
       d['Days Late'] = Math.round((d['Ship Date'] - d['Order Date']) / (1000 * 3600 * 24));
     });
 
-    // Group and stack data
     const shipModes = Array.from(new Set(data.map(d => d['Ship Mode'])));
     const groupData = d3.rollups(data, v => v.length, d => d['Days Late'], d => d['Ship Mode'])
       .map(([day, modes]) => ({
@@ -33,7 +32,6 @@ function ShippingPerformance({ data }) {
 
     const stackedData = stack(groupData);
 
-    // Scales
     const x = d3.scaleBand()
       .domain(groupData.map(d => d.day))
       .range([0, width])
@@ -43,32 +41,37 @@ function ShippingPerformance({ data }) {
       .domain([0, d3.max(stackedData, d => d3.max(d, d => d[1]))])
       .range([height, 0]);
 
-    const color = d3.scaleOrdinal(d3.schemeCategory10)
+    const color = d3.scaleOrdinal(["#ff8c00", "#ffa500", "#ff7f50", "#ff6347", "#ff4500"])
       .domain(shipModes);
 
-    // Axes
+    svg.style("background-color", "black")
+       .attr("width", 920)
+       .attr("height", 480);
+
     const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // Title
+    svg.append("text")
+       .attr("x", 920 / 2)
+       .attr("y", 20)
+       .attr("text-anchor", "middle")
+       .style("font-size", "16px")
+       .style("fill", "whitesmoke")
+       .text("Shipping Performance Analysis");
 
     g.append("g")
       .attr("transform", `translate(0,${height})`)
       .call(d3.axisBottom(x))
-      .append("text")
-      .attr("fill", "#000")
-      .attr("x", width / 2)
-      .attr("y", 50)
-      .style("text-anchor", "middle")
-      .text("Days Late");
+      .selectAll("text")
+      .style("fill", "whitesmoke")
+      .style("font-size", "12px");
 
     g.append("g")
       .call(d3.axisLeft(y))
-      .append("text")
-      .attr("fill", "#000")
-      .attr("transform", "rotate(-90)")
-      .attr("y", -30)
-      .style("text-anchor", "end")
-      .text("Number of Orders");
+      .selectAll("text")
+      .style("fill", "whitesmoke")
+      .style("font-size", "12px");
 
-    // Draw bars
     g.selectAll(".stack")
       .data(stackedData)
       .enter().append("g")
@@ -81,7 +84,6 @@ function ShippingPerformance({ data }) {
           .attr("height", d => y(d[0]) - y(d[1]))
           .attr("width", x.bandwidth());
 
-    // Legend
     const legend = svg.append("g")
       .attr("transform", `translate(${width + margin.left + 20}, ${margin.top})`)
       .attr("text-anchor", "start")
@@ -100,11 +102,12 @@ function ShippingPerformance({ data }) {
       .attr("x", 24)
       .attr("y", 9)
       .attr("dy", "0.35em")
+      .style("fill", "whitesmoke")
+      .style("font-size", "14px")
       .text(d => d);
-
   }, [data]);
 
-  return <svg ref={ref} width={920} height={480}></svg>; // Adjust width to accommodate legend
+  return <svg ref={ref}></svg>;
 }
 
 export default ShippingPerformance;

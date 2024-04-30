@@ -106,7 +106,7 @@ const SliderComponent = ({ setYearRange }) => {
   return (
     <div className="slider-container">
       <Range
-        step={86400000} // 1 day in milliseconds
+        step={86400000}
         min={minDate}
         max={maxDate}
         values={dateRange}
